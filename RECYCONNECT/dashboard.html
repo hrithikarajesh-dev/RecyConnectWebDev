@@ -26,21 +26,26 @@
   </header>
 
   <main class="wrap section">
-    <h2 style="color:#fff; margin-bottom:20px">Welcome back, Alex!</h2>
+    <h2 id="greeting" style="color:#fff; margin-bottom:20px">Welcome back!</h2>
     
     <div class="dash-stats">
       <div class="stat-card">
-        <h3>570</h3>
+        <h3 id="points">0</h3>
         <p>Current Points</p>
       </div>
       <div class="stat-card">
-        <h3>85 kg</h3>
+        <h3 id="recycled">0 kg</h3>
         <p>Total Recycled</p>
       </div>
       <div class="stat-card">
-        <h3>12</h3>
+        <h3 id="trees">0</h3>
         <p>Trees Saved Equiv.</p>
       </div>
+    </div>
+
+    <div style="margin-bottom: 20px; color: #fff;">
+      <label for="dashboardEmail" style="margin-right: 10px;">Your Email:</label>
+      <input type="email" id="dashboardEmail" class="form-control" placeholder="your@email.com" style="width: 300px; display: inline-block;">
     </div>
 
     <h3 style="color:#fff; margin-bottom:15px">Recent Activity</h3>
@@ -51,31 +56,13 @@
             <th>Date</th>
             <th>Activity</th>
             <th>Weight</th>
-            <th>Points Earned</th>
+            <th>Points</th>
             <th>Status</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="activityTable">
           <tr>
-            <td>Oct 24, 2025</td>
-            <td>Plastic Bottles</td>
-            <td>5.2 kg</td>
-            <td style="color:var(--g1)">+50</td>
-            <td>Verified</td>
-          </tr>
-          <tr>
-            <td>Oct 10, 2025</td>
-            <td>Old Newspapers</td>
-            <td>12.0 kg</td>
-            <td style="color:var(--g1)">+120</td>
-            <td>Verified</td>
-          </tr>
-          <tr>
-            <td>Sep 28, 2025</td>
-            <td>Reward Redemption</td>
-            <td>-</td>
-            <td style="color:#ff6b6b">-500</td>
-            <td>Donated (Tree)</td>
+            <td colspan="5" style="text-align: center; color: #aaa;">Load your data by entering your email above</td>
           </tr>
         </tbody>
       </table>
@@ -88,5 +75,64 @@
       <nav class="footer-nav"><a href="dashboard.html">Dashboard</a><a href="about.html">About</a></nav>
     </div>
   </footer>
+
+  <script>
+    const emailInput = document.getElementById('dashboardEmail');
+    const greetingEl = document.getElementById('greeting');
+    const pointsEl = document.getElementById('points');
+    const recycledEl = document.getElementById('recycled');
+    const treesEl = document.getElementById('trees');
+    const activityTable = document.getElementById('activityTable');
+
+    // Load email from localStorage
+    const savedEmail = localStorage.getItem('userEmail');
+    if (savedEmail) {
+      emailInput.value = savedEmail;
+      loadDashboard();
+    }
+
+    async function loadDashboard() {
+      const email = emailInput.value;
+      if (!email) {
+        activityTable.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #aaa;">Please enter your email</td></tr>';
+        return;
+      }
+
+      try {
+        const response = await fetch(`/user/${encodeURIComponent(email)}`);
+        const data = await response.json();
+
+        if (response.ok) {
+          const user = data.user;
+          greetingEl.textContent = `Welcome back, ${user.name}!`;
+          pointsEl.textContent = user.points;
+          recycledEl.textContent = (parseFloat(user.totalRecycled) || 0).toFixed(1) + ' kg';
+          treesEl.textContent = Math.floor((parseFloat(user.totalRecycled) || 0) / 7); // Approximate CO2 offset
+
+          // Load activity
+          if (data.activity && data.activity.length > 0) {
+            activityTable.innerHTML = data.activity.map(item => `
+              <tr>
+                <td>${new Date(item.created_at).toLocaleDateString()}</td>
+                <td>${item.waste_type || 'Activity'}</td>
+                <td>${item.weight ? item.weight + ' kg' : '-'}</td>
+                <td style="color:#9ca81a">${item.points_earned ? '+' + item.points_earned : 'N/A'}</td>
+                <td>${item.status}</td>
+              </tr>
+            `).join('');
+          } else {
+            activityTable.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #aaa;">No activity yet. Start submitting waste!</td></tr>';
+          }
+        } else {
+          activityTable.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #ff6b6b;">User not found</td></tr>';
+        }
+      } catch (error) {
+        activityTable.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #ff6b6b;">Error loading data: ' + error.message + '</td></tr>';
+      }
+    }
+
+    emailInput.addEventListener('change', loadDashboard);
+    emailInput.addEventListener('blur', loadDashboard);
+  </script>
 </body>
 </html>
