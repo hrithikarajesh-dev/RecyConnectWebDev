@@ -26,27 +26,48 @@
   </header>
 
   <main class="wrap section">
-    <div class="form-box">
-      <h2>Create Account</h2>
-      <form id="registerForm">
-        <div class="form-group">
-          <label>Full Name</label>
-          <input type="text" id="fullName" class="form-control" placeholder="e.g. Alex Doe" required>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: flex-start;">
+      <!-- Registration Form -->
+      <div class="form-box">
+        <h2>Create Account</h2>
+        <form id="registerForm">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="fullName" class="form-control" placeholder="e.g. Alex Doe" required>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="email" class="form-control" placeholder="name@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Sign Up</button>
+          <p id="message" style="text-align:center; margin-top:15px; font-size:0.9rem; opacity:0.8;"></p>
+          <p style="text-align:center; margin-top:15px; font-size:0.9rem; opacity:0.8">
+            Already have an account? <a href="waste-form.html" style="color:#fff; text-decoration:underline">Continue</a>
+          </p>
+        </form>
+      </div>
+
+      <!-- AI Chatbot -->
+      <div class="form-box" style="display: flex; flex-direction: column;">
+        <h2>💬 Ask RecyBot</h2>
+        <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 15px;">Got questions about recycling? Ask our AI assistant!</p>
+        
+        <div id="chatMessages" style="flex: 1; overflow-y: auto; max-height: 350px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 10px; background: rgba(0,0,0,0.2);">
+          <div style="text-align: center; color: #aaa; padding: 20px;">
+            <p>👋 Hi! Ask about waste recycling, points, or registration</p>
+          </div>
         </div>
-        <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" id="email" class="form-control" placeholder="name@example.com" required>
+
+        <div style="display: flex; gap: 10px;">
+          <input type="text" id="chatInput" class="form-control" placeholder="e.g., Where does plastic go?" style="flex: 1; margin: 0;">
+          <button onclick="sendChatMessage()" class="btn btn-primary" style="padding: 14px 20px; white-space: nowrap;">Send</button>
         </div>
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" id="password" class="form-control" placeholder="••••••••" required>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width:100%">Sign Up</button>
-        <p id="message" style="text-align:center; margin-top:15px; font-size:0.9rem; opacity:0.8;"></p>
-        <p style="text-align:center; margin-top:15px; font-size:0.9rem; opacity:0.8">
-          Already have an account? <a href="waste-form.html" style="color:#fff; text-decoration:underline">Continue</a>
-        </p>
-      </form>
+        <p id="chatError" style="text-align: center; margin-top: 10px; font-size: 0.85rem; color: #ff6b6b; display: none;"></p>
+      </div>
     </div>
   </main>
 
@@ -60,7 +81,11 @@
   <script>
     const registerForm = document.getElementById('registerForm');
     const messageDiv = document.getElementById('message');
+    const chatInput = document.getElementById('chatInput');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatError = document.getElementById('chatError');
 
+    // Register form submission
     registerForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = document.getElementById('fullName').value;
@@ -87,6 +112,52 @@
       } catch (error) {
         messageDiv.textContent = 'Connection error: ' + error.message;
         messageDiv.style.color = '#ff6b6b';
+      }
+    });
+
+    // Chatbot functionality
+    window.sendChatMessage = async function() {
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      // Add user message to chat
+      const userDiv = document.createElement('div');
+      userDiv.style.cssText = 'margin: 10px 0; text-align: right; color: #9ca81a;';
+      userDiv.textContent = '📝 ' + message;
+      chatMessages.appendChild(userDiv);
+
+      chatInput.value = '';
+      chatError.style.display = 'none';
+
+      try {
+        const response = await fetch('/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          const botDiv = document.createElement('div');
+          botDiv.style.cssText = 'margin: 10px 0; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 6px; color: #fff; font-size: 0.9rem; line-height: 1.4;';
+          botDiv.textContent = '🤖 ' + data.reply;
+          chatMessages.appendChild(botDiv);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        } else {
+          chatError.textContent = 'Error: ' + (data.error || 'Failed to get response');
+          chatError.style.display = 'block';
+        }
+      } catch (error) {
+        chatError.textContent = 'Connection error: ' + error.message;
+        chatError.style.display = 'block';
+      }
+    };
+
+    // Allow Enter key to send message
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        window.sendChatMessage();
       }
     });
   </script>

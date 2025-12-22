@@ -2,7 +2,14 @@ const express = require("express");
 const path = require("path");
 const { Pool } = require("pg");
 const bcrypt = require("bcryptjs");
+const OpenAI = require("openai");
 const app = express();
+
+// Initialize OpenAI client
+const openai = new OpenAI({
+  apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY || "dummy",
+  baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL || "https://api.openai.com/v1",
+});
 
 // Database connection
 const pool = new Pool({
@@ -192,6 +199,42 @@ app.post("/redeem", async (req, res) => {
     });
   } catch (err) {
     res.status(400).json({ error: err.message });
+  }
+});
+
+// AI CHATBOT - Answer questions about waste recycling
+app.post("/chat", async (req, res) => {
+  try {
+    const { message } = req.body;
+    if (!message) {
+      return res.status(400).json({ error: "Message required" });
+    }
+
+    const systemPrompt = `You are RecyConnect's AI Assistant, helping users understand waste recycling. 
+You provide helpful information about:
+- Where different waste materials go (plastic, paper, e-waste, metal, etc.)
+- How materials are recycled
+- Environmental benefits
+- Points system explanation
+- Registration and account questions
+
+Be friendly, concise, and informative. Focus on waste recycling and RecyConnect services.`;
+
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: message }
+      ],
+      max_tokens: 500,
+      temperature: 0.7,
+    });
+
+    const botMessage = response.choices[0].message.content;
+    res.json({ reply: botMessage });
+  } catch (err) {
+    console.error("ChatBot error:", err);
+    res.status(400).json({ error: "Failed to process message" });
   }
 });
 
