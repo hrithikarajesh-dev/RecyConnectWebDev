@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Submit Waste - RecyConnect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@500;700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo">♻️</div>
+        <h1>RecyConnect</h1>
+      </div>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="register.html">Register</a>
+        <a href="waste-form.html" class="active">Submit Waste</a>
+        <a href="redeem.html">Redeem</a>
+      </nav>
+      <button class="hamburger" onclick="document.body.classList.toggle('nav-open')">☰</button>
+    </div>
+  </header>
+
+  <main class="wrap section">
+    <div class="form-box">
+      <h2>Schedule Pickup</h2>
+      <form onsubmit="event.preventDefault(); alert('Pickup Scheduled! 50 Points Pending.'); window.location.href='dashboard.html'">
+        <div class="form-group">
+          <label>Waste Type</label>
+          <select class="form-control">
+            <option>Plastic Bottles</option>
+            <option>Paper / Cardboard</option>
+            <option>E-Waste</option>
+            <option>Metal Cans</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Approx Weight (kg)</label>
+          <input type="number" class="form-control" placeholder="e.g. 5" required>
+        </div>
+        <div class="form-group">
+          <label>Pickup Address</label>
+          <textarea class="form-control" rows="3" placeholder="Apartment, Street, City" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Preferred Date</label>
+          <input type="date" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%">Submit Request</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <p class="muted small">© 2025 RecyConnect</p>
+      <nav class="footer-nav"><a href="dashboard.html">Dashboard</a><a href="about.html">About</a></nav>
+    </div>
+  </footer>
+</body>
+</html>

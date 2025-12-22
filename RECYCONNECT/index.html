@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RecyConnect — Turn Waste into Worth</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@500;700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo">♻️</div>
+        <h1>RecyConnect</h1>
+      </div>
+      <nav class="site-nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="register.html">Register</a>
+        <a href="waste-form.html">Submit Waste</a>
+        <a href="redeem.html">Redeem</a>
+      </nav>
+      <button class="hamburger" onclick="document.body.classList.toggle('nav-open')">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-left">
+          <h2 class="hero-title">
+            Turn Waste into <span class="worth-gold">Worth</span>
+          </h2>
+          <p class="hero-lead">
+            RecyConnect connects communities and recyclers — rewarding eco-friendly actions with points that convert to cash or donations.
+          </p>
+          <div class="hero-ctas">
+            <a href="register.html" class="btn btn-primary">Get Started</a>
+            <a href="#how" class="btn btn-outline">How it works</a>
+          </div>
+          <ul class="quick-stats">
+            <li><strong>85 kg</strong><span>Recycled</span></li>
+            <li><strong>570</strong><span>Eco-Points</span></li>
+            <li><strong>3</strong><span>Partners</span></li>
+          </ul>
+        </div>
+
+        <div class="hero-right">
+          <div class="planet-wrap">
+            <svg class="planet" viewBox="0 0 200 200">
+              <defs>
+                <radialGradient id="g1" cx="40%" cy="30%">
+                  <stop offset="0%" stop-color="#41994d"/>
+                  <stop offset="100%" stop-color="#006572"/>
+                </radialGradient>
+                <filter id="soft"><feGaussianBlur stdDeviation="5" result="b"/><feBlend in="SourceGraphic" in2="b"/></filter>
+              </defs>
+              <circle cx="100" cy="100" r="84" fill="url(#g1)" filter="url(#soft)"/>
+              <path d="M60 80 q30 -20 50 0 q-10 20 -30 24 q-28 -8 -20 -24" fill="#9ca81a" opacity="0.9"/>
+              <path d="M120 110 q20 10 30 0 q-6 12 -18 18 q-20 -6 -12 -18" fill="#ffa511" opacity="0.2"/>
+            </svg>
+            <div class="floating a"></div>
+            <div class="floating b"></div>
+            <div class="floating c"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" class="section">
+      <div class="wrap">
+        <div class="section-header">
+            <h3>How it works</h3>
+        </div>
+        <div class="cards-grid">
+            <div class="card">
+            <h4>1. Add Entry</h4>
+            <p>Record material type and weight. Points are calculated automatically.</p>
+            </div>
+            <div class="card">
+            <h4>2. Eco Wallet</h4>
+            <p>Points are stored in your wallet. Track balance and redeem for vouchers.</p>
+            </div>
+            <div class="card">
+            <h4>3. Impact</h4>
+            <p>Visualize your CO₂ savings and environmental contribution.</p>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta">
+      <div class="wrap cta-block">
+        <h3>Ready to start recycling?</h3>
+        <div>
+          <a href="register.html" class="btn btn-primary">Join Now</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <p class="muted small">© 2025 RecyConnect</p>
+      <nav class="footer-nav">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu close on click
+    document.querySelectorAll('.site-nav a').forEach(a => {
+      a.addEventListener('click', () => document.body.classList.remove('nav-open'));
+    });
+    // Planet animation
+    const planetWrap = document.querySelector('.planet-wrap');
+    const planet = document.querySelector('.planet');
+    if (planetWrap) {
+        planetWrap.addEventListener('mousemove', e => {
+            const rect = planetWrap.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            planet.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
+        });
+        planetWrap.addEventListener('mouseleave', () => planet.style.transform = 'none');
+    }
+  </script>
+</body>
+</html>

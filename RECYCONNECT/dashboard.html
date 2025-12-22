@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>User Dashboard - RecyConnect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@500;700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo">♻️</div>
+        <h1>RecyConnect</h1>
+      </div>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="register.html">Register</a>
+        <a href="waste-form.html">Submit Waste</a>
+        <a href="redeem.html">Redeem</a>
+      </nav>
+      <button class="hamburger" onclick="document.body.classList.toggle('nav-open')">☰</button>
+    </div>
+  </header>
+
+  <main class="wrap section">
+    <h2 style="color:#fff; margin-bottom:20px">Welcome back, Alex!</h2>
+    
+    <div class="dash-stats">
+      <div class="stat-card">
+        <h3>570</h3>
+        <p>Current Points</p>
+      </div>
+      <div class="stat-card">
+        <h3>85 kg</h3>
+        <p>Total Recycled</p>
+      </div>
+      <div class="stat-card">
+        <h3>12</h3>
+        <p>Trees Saved Equiv.</p>
+      </div>
+    </div>
+
+    <h3 style="color:#fff; margin-bottom:15px">Recent Activity</h3>
+    <div class="table-container">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Activity</th>
+            <th>Weight</th>
+            <th>Points Earned</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Oct 24, 2025</td>
+            <td>Plastic Bottles</td>
+            <td>5.2 kg</td>
+            <td style="color:var(--g1)">+50</td>
+            <td>Verified</td>
+          </tr>
+          <tr>
+            <td>Oct 10, 2025</td>
+            <td>Old Newspapers</td>
+            <td>12.0 kg</td>
+            <td style="color:var(--g1)">+120</td>
+            <td>Verified</td>
+          </tr>
+          <tr>
+            <td>Sep 28, 2025</td>
+            <td>Reward Redemption</td>
+            <td>-</td>
+            <td style="color:#ff6b6b">-500</td>
+            <td>Donated (Tree)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <p class="muted small">© 2025 RecyConnect</p>
+      <nav class="footer-nav"><a href="dashboard.html">Dashboard</a><a href="about.html">About</a></nav>
+    </div>
+  </footer>
+</body>
+</html>
