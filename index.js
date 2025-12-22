@@ -195,6 +195,21 @@ app.post("/redeem", async (req, res) => {
   }
 });
 
+// GET ALL REGISTERED USERS
+app.get("/users", async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT DISTINCT ON (email) 
+        id, name, email, points, created_at 
+      FROM users 
+      ORDER BY email, created_at DESC`
+    );
+    res.json({ users: result.rows });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 // GET USER DATA
 app.get("/user/:email", async (req, res) => {
   try {

@@ -67,6 +67,25 @@
         </tbody>
       </table>
     </div>
+
+    <h3 style="color:#fff; margin-bottom:15px; margin-top:40px">Registered Users</h3>
+    <div class="table-container">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Points</th>
+            <th>Joined</th>
+          </tr>
+        </thead>
+        <tbody id="usersTable">
+          <tr>
+            <td colspan="4" style="text-align: center; color: #aaa;">Loading registered users...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </main>
 
   <footer class="site-footer">
@@ -83,6 +102,7 @@
     const recycledEl = document.getElementById('recycled');
     const treesEl = document.getElementById('trees');
     const activityTable = document.getElementById('activityTable');
+    const usersTable = document.getElementById('usersTable');
 
     // Load email from localStorage
     const savedEmail = localStorage.getItem('userEmail');
@@ -90,6 +110,9 @@
       emailInput.value = savedEmail;
       loadDashboard();
     }
+
+    // Load registered users on page load
+    loadUsers();
 
     async function loadDashboard() {
       const email = emailInput.value;
@@ -128,6 +151,28 @@
         }
       } catch (error) {
         activityTable.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #ff6b6b;">Error loading data: ' + error.message + '</td></tr>';
+      }
+    }
+
+    async function loadUsers() {
+      try {
+        const response = await fetch('/users');
+        const data = await response.json();
+
+        if (response.ok && data.users && data.users.length > 0) {
+          usersTable.innerHTML = data.users.map(user => `
+            <tr>
+              <td>${user.name}</td>
+              <td>${user.email}</td>
+              <td style="color:#9ca81a"><strong>${user.points}</strong></td>
+              <td>${new Date(user.created_at).toLocaleDateString()}</td>
+            </tr>
+          `).join('');
+        } else {
+          usersTable.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #aaa;">No registered users yet</td></tr>';
+        }
+      } catch (error) {
+        usersTable.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #ff6b6b;">Error loading users: ' + error.message + '</td></tr>';
       }
     }
 
