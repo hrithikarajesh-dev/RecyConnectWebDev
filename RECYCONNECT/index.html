@@ -29,64 +29,60 @@
 
   <main>
     <section class="hero">
-      <div class="wrap">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: flex-start;">
-          <!-- Left side: Title, CTA, Stats -->
-          <div class="hero-left">
-            <h2 class="hero-title">
-              Turn Waste into <span class="worth-gold">Worth</span>
-            </h2>
-            <p class="hero-lead">
-              RecyConnect connects communities and recyclers — rewarding eco-friendly actions with points that convert to cash or donations.
-            </p>
-            <div class="hero-ctas">
-              <a href="register.html" class="btn btn-primary">Get Started</a>
-              <a href="#how" class="btn btn-outline">How it works</a>
-            </div>
-            <ul class="quick-stats">
-              <li><strong>85 kg</strong><span>Recycled</span></li>
-              <li><strong>570</strong><span>Eco-Points</span></li>
-              <li><strong>3</strong><span>Partners</span></li>
-            </ul>
+      <div class="wrap hero-grid">
+        <div class="hero-left">
+          <h2 class="hero-title">
+            Turn Waste into <span class="worth-gold">Worth</span>
+          </h2>
+          <p class="hero-lead">
+            RecyConnect connects communities and recyclers — rewarding eco-friendly actions with points that convert to cash or donations.
+          </p>
+          <div class="hero-ctas">
+            <a href="register.html" class="btn btn-primary">Get Started</a>
+            <a href="#how" class="btn btn-outline">How it works</a>
+          </div>
+          <ul class="quick-stats">
+            <li><strong>85 kg</strong><span>Recycled</span></li>
+            <li><strong>570</strong><span>Eco-Points</span></li>
+            <li><strong>3</strong><span>Partners</span></li>
+          </ul>
+        </div>
 
-            <!-- Chatbot in hero section -->
-            <div style="margin-top: 30px; background: rgba(255,255,255,0.12); padding: 20px; border-radius: 15px; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);">
-              <h4 style="color: #ffa511; margin-bottom: 10px; font-size: 1rem;">💬 Ask RecyBot</h4>
-              <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 12px;">Got questions? Ask our AI!</p>
-              
-              <div id="chatMessages" style="overflow-y: auto; max-height: 200px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 10px; background: rgba(0,0,0,0.3); font-size: 0.85rem;">
-                <div style="text-align: center; color: #aaa; padding: 15px;">
-                  <p>👋 Hi! Ask anything</p>
-                </div>
-              </div>
-
-              <div style="display: flex; gap: 8px;">
-                <input type="text" id="chatInput" placeholder="e.g. How to earn points?" style="flex: 1; padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: #fff; font-size: 0.85rem;">
-                <button onclick="sendChatMessage()" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem; white-space: nowrap;">Send</button>
-              </div>
-              <p id="chatError" style="text-align: center; margin-top: 8px; font-size: 0.75rem; color: #ff6b6b; display: none;"></p>
-            </div>
+        <div class="hero-right">
+          <div class="planet-wrap">
+            <svg class="planet" viewBox="0 0 200 200">
+              <defs>
+                <radialGradient id="g1" cx="40%" cy="30%">
+                  <stop offset="0%" stop-color="#41994d"/>
+                  <stop offset="100%" stop-color="#006572"/>
+                </radialGradient>
+                <filter id="soft"><feGaussianBlur stdDeviation="5" result="b"/><feBlend in="SourceGraphic" in2="b"/></filter>
+              </defs>
+              <circle cx="100" cy="100" r="84" fill="url(#g1)" filter="url(#soft)"/>
+              <path d="M60 80 q30 -20 50 0 q-10 20 -30 24 q-28 -8 -20 -24" fill="#9ca81a" opacity="0.9"/>
+              <path d="M120 110 q20 10 30 0 q-6 12 -18 18 q-20 -6 -12 -18" fill="#ffa511" opacity="0.2"/>
+            </svg>
+            <div class="floating a"></div>
+            <div class="floating b"></div>
+            <div class="floating c"></div>
           </div>
 
-          <!-- Right side: Planet animation -->
-          <div class="hero-right">
-            <div class="planet-wrap">
-              <svg class="planet" viewBox="0 0 200 200">
-                <defs>
-                  <radialGradient id="g1" cx="40%" cy="30%">
-                    <stop offset="0%" stop-color="#41994d"/>
-                    <stop offset="100%" stop-color="#006572"/>
-                  </radialGradient>
-                  <filter id="soft"><feGaussianBlur stdDeviation="5" result="b"/><feBlend in="SourceGraphic" in2="b"/></filter>
-                </defs>
-                <circle cx="100" cy="100" r="84" fill="url(#g1)" filter="url(#soft)"/>
-                <path d="M60 80 q30 -20 50 0 q-10 20 -30 24 q-28 -8 -20 -24" fill="#9ca81a" opacity="0.9"/>
-                <path d="M120 110 q20 10 30 0 q-6 12 -18 18 q-20 -6 -12 -18" fill="#ffa511" opacity="0.2"/>
-              </svg>
-              <div class="floating a"></div>
-              <div class="floating b"></div>
-              <div class="floating c"></div>
+          <!-- Chatbot below planet -->
+          <div style="margin-top: 25px; background: rgba(255,255,255,0.12); padding: 18px; border-radius: 12px; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);">
+            <h4 style="color: #ffa511; margin-bottom: 8px; font-size: 0.95rem;">💬 Ask RecyBot</h4>
+            <p style="font-size: 0.8rem; opacity: 0.75; margin-bottom: 10px;">Questions? Ask our AI!</p>
+            
+            <div id="chatMessages" style="overflow-y: auto; max-height: 180px; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 8px; background: rgba(0,0,0,0.3); font-size: 0.8rem;">
+              <div style="text-align: center; color: #aaa; padding: 12px;">
+                <p>👋 Hi!</p>
+              </div>
             </div>
+
+            <div style="display: flex; gap: 6px;">
+              <input type="text" id="chatInput" placeholder="Ask me..." style="flex: 1; padding: 7px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: #fff; font-size: 0.8rem;">
+              <button onclick="sendChatMessage()" class="btn btn-primary" style="padding: 7px 14px; font-size: 0.8rem; white-space: nowrap;">Send</button>
+            </div>
+            <p id="chatError" style="text-align: center; margin-top: 6px; font-size: 0.7rem; color: #ff6b6b; display: none;"></p>
           </div>
         </div>
       </div>
@@ -164,7 +160,7 @@
 
       // Add user message to chat
       const userDiv = document.createElement('div');
-      userDiv.style.cssText = 'margin: 5px 0; text-align: right; color: #9ca81a; font-size: 0.8rem;';
+      userDiv.style.cssText = 'margin: 4px 0; text-align: right; color: #9ca81a; font-size: 0.75rem;';
       userDiv.textContent = '📝 ' + message;
       chatMessages.appendChild(userDiv);
 
@@ -181,12 +177,12 @@
         const data = await response.json();
         if (response.ok) {
           const botDiv = document.createElement('div');
-          botDiv.style.cssText = 'margin: 5px 0; padding: 6px; background: rgba(255,255,255,0.08); border-radius: 4px; color: #fff; font-size: 0.8rem; line-height: 1.3;';
+          botDiv.style.cssText = 'margin: 4px 0; padding: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; color: #fff; font-size: 0.75rem; line-height: 1.3;';
           botDiv.textContent = '🤖 ' + data.reply;
           chatMessages.appendChild(botDiv);
           chatMessages.scrollTop = chatMessages.scrollHeight;
         } else {
-          chatError.textContent = 'Error: ' + (data.error || 'Failed to get response');
+          chatError.textContent = 'Error';
           chatError.style.display = 'block';
         }
       } catch (error) {
