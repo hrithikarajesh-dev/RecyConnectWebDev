@@ -27,6 +27,7 @@ const pointsPerKg = {
   "Paper / Cardboard": 10,
   "E-Waste": 20,
   "Metal Cans": 15,
+  "Biodegradable Substance": 12,
 };
 
 // Initialize database tables
