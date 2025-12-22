@@ -25,12 +25,15 @@ const pointsPerKg = {
 // Initialize database tables
 async function initializeDatabase() {
   try {
-    // Create users table
+    // Drop old users table if it exists (for schema migration)
+    await pool.query(`DROP TABLE IF EXISTS redemptions, waste_submissions, users CASCADE`);
+
+    // Create users table (allow duplicate emails)
     await pool.query(`
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) UNIQUE NOT NULL,
+        email VARCHAR(255) NOT NULL,
         password VARCHAR(255) NOT NULL,
         points INT DEFAULT 0,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -76,10 +79,12 @@ initializeDatabase();
 // API Routes
 
 // Get current user from session (simplified - using email as identifier)
+// If multiple accounts with same email, returns the most recent one
 const getCurrentUser = async (email) => {
-  const result = await pool.query("SELECT * FROM users WHERE email = $1", [
-    email,
-  ]);
+  const result = await pool.query(
+    "SELECT * FROM users WHERE email = $1 ORDER BY created_at DESC LIMIT 1",
+    [email]
+  );
   return result.rows[0] || null;
 };
 
