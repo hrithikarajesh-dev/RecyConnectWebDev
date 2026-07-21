@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const { Pool } = require("pg");
@@ -6,7 +7,7 @@ const OpenAI = require("openai");
 const app = express();
 
 
-const connectionString = "postgresql://neondb_owner:npg_DPrAdCa7W4HZ@ep-dawn-shape-a4im99ti-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require";
+const connectionString = process.env.DATABASE_URL;
 
 
 const pool = new Pool({
