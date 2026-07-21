@@ -3,12 +3,9 @@ const express = require("express");
 const path = require("path");
 const { Pool } = require("pg");
 const bcrypt = require("bcryptjs");
-const OpenAI = require("openai");
 const app = express();
 
-
 const connectionString = process.env.DATABASE_URL;
-
 
 const pool = new Pool({
   connectionString: connectionString,
